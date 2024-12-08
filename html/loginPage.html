@@ -1,5 +1,4 @@
 <!-- loginpage -->
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -53,14 +52,13 @@
 					class="flex flex-row justify-center items-center gap-[15px] w-full h-fit px-[11px] py-[8px] bg-white bg-opacity-5 rounded-md border-2 border-transparent focus-within:border-white group"
 				>
 					<i
-						class="ml-[5px] text-white fa-regular fa-user opacity-65 w-[17px] h-auto"
+						class="ml-[5px] text-white fa-regular fa-user opacity-65 text-[17px] h-auto"
 					></i>
 					<input
 						type="text"
 						placeholder="Username"
+						autocomplete="username"
 						id="username"
-						required
-						minlength="5"
 						class="font-extralight bg-transparent border-none focus:outline-none focus:border-none text-white w-full"
 					/>
 				</div>
@@ -69,22 +67,23 @@
 					class="flex flex-row justify-center items-center gap-[15px] w-full h-fit px-[11px] py-[8px] bg-white bg-opacity-5 rounded-md border-2 border-transparent focus-within:border-white group"
 				>
 					<i
-						class="ml-[5px] text-white fa-solid fa-lock opacity-65 w-[17px] h-auto"
+						class="ml-[5px] text-white fa-solid fa-lock opacity-65 text-[17px] h-auto"
 					></i>
 					<input
 						type="password"
 						placeholder="Password"
+						autocomplete="current-password"
 						id="password"
-						required
-						minlength="5"
 						class="font-extralight bg-transparent border-none focus:outline-none focus:border-none text-white w-full"
 					/>
 					<i
-						class="mr-[10px] text-white fa-regular fa-eye opacity-65 w-[17px] h-auto"
+						id="passwordIcon"
+						class="mr-[10px] text-white fa-regular fa-eye opacity-65 text-[17px] h-auto hover:cursor-pointer"
 					></i>
 				</div>
 
 				<button
+					id="login"
 					type="submit"
 					class="mt-[91px] h-fit w-full px-[17px] py-[5px] bg-white text-black font-medium md:rounded-md rounded-sm hover:bg-black hover:text-white transition-colors duration-500 ease-in-out text-[14px] md:text-[20px]"
 				>
@@ -98,7 +97,7 @@
 				Don’t Have an Account? <u>Register</u>
 			</button>
 		</div>
-		<script src="../js/screen/loginPage.js"></script>
+		<script type="module" src="../js/screen/loginPage.js"></script>
 		<script
 			type="text/javascript"
 			src="https://cdn.jsdelivr.net/npm/toastify-js"

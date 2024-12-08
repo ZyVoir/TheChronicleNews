@@ -20,12 +20,30 @@
 		@apply z-[-2];
 	}
 
+	.circle-small {
+		width: 500px;
+		height: 500px;
+		@apply blur-[250px];
+		@apply z-[-2];
+	}
+
 	.containerPrimary {
 		@apply bg-white;
 		@apply bg-opacity-10;
 		@apply backdrop-blur-sm;
 		@apply border-[1px];
 		@apply rounded-xl;
+		@apply border-white;
+		@apply border-opacity-50;
+	}
+
+	.circleButton {
+		@apply bg-white;
+		@apply bg-opacity-10;
+		@apply p-[16px];
+		@apply border-[1px];
+		@apply rounded-full;
+		@apply backdrop-blur-sm;
 		@apply border-white;
 		@apply border-opacity-50;
 	}
