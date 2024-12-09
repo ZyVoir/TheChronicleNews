@@ -69,7 +69,7 @@ btnPrevPage.addEventListener("click", function () {
 	}
 });
 
-const user = initLoginCredential();
+var user = initLoginCredential();
 fetchNewsAPI();
 
 window.addEventListener("load", function () {
@@ -153,14 +153,25 @@ function checkIsUpdateReadCount() {
 	const isRead = sessionStorage.getItem("isRead");
 
 	if (isRead != null) {
-		// Update GridReadCount and Possibly the GridOutLook
-		console.log("Update");
+		if (isRead) {
+			// Update GridReadCount and Possibly the GridOutLook
+			const users = JSON.parse(localStorage.getItem("users"));
+			users.forEach((item) => {
+				if (item.username === user.username) {
+					item.readCount += 1;
+					user = item;
+					sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+				}
+			});
+			gridReadCount.innerText = `You have read ${user.readCount} news`;
+			localStorage.setItem("users", JSON.stringify(users));
+			sessionStorage.removeItem("isRead");
+		}
 	}
 }
 
 function fetchNewsAPI(isHeadline = true) {
 	news.length = 0;
-
 	const API = isHeadline
 		? "https://newsapi.org/v2/top-headlines?apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&language=en"
 		: `https://newsapi.org/v2/everything?q=${TFSearchQuery.value}&apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&page=1`;
@@ -265,7 +276,7 @@ function createInstanceOfNews(news) {
 						class="flex flex-col sm:flex-row gap-[35px] px-[32px] py-[26px] w-full h-full"
 					>
 						<img
-							src="${news.urlImg}"
+							src="${news.urlImg == null ? "" : news.urlImg}"
 							class="w-full sm:w-[50%] sm:max-w-[50%] aspect-video object-cover rounded-md ${
 								news.urlImg == null ? "bg-white" : ""
 							}"
@@ -274,13 +285,13 @@ function createInstanceOfNews(news) {
 						<div
 							class="flex flex-col gap-[16px] sm:justify-start items-start sm:max-w-[50%]"
 						>
-							<h2 class="text-white font-medium text-[16px] sm:text-[20px]">
+							<h2 class="text-white font-medium text-[16px] sm:text-[20px] text-justify">
 								${news.title}
 							</h2>
-							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65">
+							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65 text-justify">
 								${news.desc == null ? "No Description Provided" : news.desc}
 							</h5>
-							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65">
+							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65 text-justify">
 								${news.datePublished}
 							</h5>
 						</div>

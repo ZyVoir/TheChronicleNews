@@ -17,7 +17,7 @@
 		/>
 		<title>The Chronicle News - Detail Page</title>
 	</head>
-	<body class="bg-primary flex justify-center items-center h-screen">
+	<body class="bg-primary flex flex-row justify-center items-start">
 		<!-- background -->
 		<div
 			class="circle bg-circle8 fixed top-[-400px] rounded-full left-[-250px] animate-circleMove"
@@ -30,6 +30,98 @@
 		></div>
 
 		<div class="fixed w-full h-full bg-black opacity-[0.3] z-[-1]"></div>
+
+		<!-- big frame  -->
+		<div
+			class="animate-fadeInUp flex flex-col containerPrimary w-full min-h-[93vh] lg:mx-[77px] lg:my-[35px] md:mx-[40px] md:my-[19px] mx-[15px] my-[15px] py-[25px] sm:px-[30px] px-[15px] gap-[25px]"
+		>
+			<!-- first row  -->
+			<div
+				class="animate-fadeInDown flex flex-row w-full h-fit justify-between items-center"
+			>
+				<h2
+					class="text-[20px] md:text-[26px] lg:text-[36px] text-white font-semibold"
+				>
+					News
+				</h2>
+
+				<div
+					id="exit"
+					class="flex justify-center items-center circleButton w-[35px] h-[35px] sm:w-[54px] sm:h-[54px] aspect-square hover:bg-white transition-all duration-500 ease-in-out hover:cursor-pointer self-center group"
+				>
+					<i
+						class="fa-solid fa-xmark group-hover:text-red-600 text-white sm:text-[20px] text-[14px] transition-all duration-500 ease-in-out"
+					></i>
+				</div>
+			</div>
+
+			<!-- second row  -->
+			<div
+				class="animate-fadeInDown flex flex-col w-full h-fit justify-start items-start gap-[40px]"
+			>
+				<img
+					id="newsImg"
+					src="../asset/Logo.png"
+					alt="No Image Provided"
+					class="w-full md:w-[50%] md:max-w-[50%] aspect-video object-cover rounded-md"
+				/>
+				<div class="flex flex-col gap-[28px] w-full h-fit">
+					<h2
+						id="newsTitle"
+						class="animate-fadeInUp text-white font-medium text-[16px] sm:text-[20px] md:text-[26px] lg:[32px] w-full h-fit text-justify"
+					>
+						Rumor: Nintendo Switch 2 reveal and release timing, Kirby: Planet
+						Robobot getting Switch port - Nintendo Everything
+					</h2>
+					<h3
+						id="newsDesc"
+						class="animate-fadeInUp2 text-white font-light text-[11px] sm:text-[16px] md:text-[20px] lg:[24px] w-full h-fit text-opacity-65 text-justify"
+					>
+						New rumors surface about Nintendo Switch 2 reveal and release timing
+						plus a Kirby: Planet Robobot Nintendo Switch port.
+					</h3>
+
+					<div class="flex flex-col gap-[6px] w-full h-fit">
+						<a
+							id="newsURL"
+							target="_blank"
+							href="www.wikipedia.com"
+							class="animate-fadeInUp2 text-white font-light text-[11px] sm:text-[11px] md:text-[15px] lg:[19px] w-full h-fit text-opacity-100 text-justify"
+						>
+							Click <u>here</u> to go to source
+						</a>
+						<h3
+							id="newsSrc"
+							class="animate-fadeInUp2 text-white font-light text-[11px] sm:text-[11px] md:text-[15px] lg:[19px] w-full h-fit text-opacity-65 text-justify"
+						>
+							Source - [ID] : [Source Name]
+						</h3>
+
+						<h3
+							id="newsAuthor"
+							class="animate-fadeInUp2 text-white font-light text-[11px] sm:text-[11px] md:text-[15px] lg:[19px] w-full h-fit text-opacity-65 text-justify"
+						>
+							Author : [Author Name]
+						</h3>
+						<h3
+							id="newsDate"
+							class="animate-fadeInUp2 text-white font-light text-[11px] sm:text-[11px] md:text-[15px] lg:[19px] w-full h-fit text-opacity-65 text-justify"
+						>
+							2024-12-06T16:09:39Z
+						</h3>
+					</div>
+				</div>
+			</div>
+
+			<!-- content row  -->
+			<p
+				id="newsContent"
+				class="animate-fadeInUp2 flex flex-col w-full h-fit justify-start items-start gap-[40px] text-justify text-white text-opacity-65 font-extralight text-[11px] sm:text-[11px] md:text-[15px] lg:[19px]"
+			>
+				Content
+			</p>
+		</div>
+
 		<script type="module" src="../js/screen/detailPage.js"></script>
 		<script
 			type="text/javascript"
