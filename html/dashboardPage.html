@@ -16,7 +16,7 @@
 		/>
 		<title>The Chronicle News - Dashboard</title>
 	</head>
-	<body class="bg-primary flex justify-center items-start h-screen">
+	<body class="bg-primary flex flex-row justify-center items-start">
 		<!-- background -->
 		<div
 			class="circle bg-circle5 fixed top-[-400px] rounded-full left-[-250px] animate-circleMove"
@@ -32,7 +32,7 @@
 
 		<!-- ui -->
 		<div
-			class="flex flex-col w-full h-fit gap-[25px] mx-[15px] my-[10px] md:mx-[77px] md:my-[46px]"
+			class="flex flex-col w-full flex-grow h-[93vh] gap-[25px] mx-[15px] my-[10px] md:mx-[77px] md:my-[46px] mb-[20px]"
 		>
 			<!-- first frame -->
 			<div
@@ -167,45 +167,53 @@
 			<!-- fifth frame -->
 			<h3
 				id="resultCount"
-				class="w-full h-fit text-white font-light text-[20px] opacity-65 hidden"
+				class="animate-fadeInUp w-full h-fit text-white font-light text-[20px] opacity-65 hidden"
 			>
 				Showing 35 result(s)
 			</h3>
 
-			<!-- sixth frame  -->
-			<ul class="flex flex-col gap-[25px] w-full h-fit">
-				<li class="animate-fadeInUp2 w-full h-fit containerPrimary">
-					<div
-						class="flex flex-col sm:flex-row gap-[35px] px-[32px] py-[26px] w-full h-full"
-					>
-						<!-- change this div to image later -->
-						<div
-							src="../asset/Logo.png"
-							class="w-full sm:w-[50%] sm:max-w-[50%] aspect-video object-cover bg-white rounded-md"
-							alt=""
-						></div>
-						<div
-							class="flex flex-col gap-[16px] sm:justify-start items-start sm:max-w-[50%]"
-						>
-							<h2 class="text-white font-medium text-[16px] sm:text-[20px]">
-								Rumor: Nintendo Switch 2 reveal and release timing, Kirby:
-								Planet Robobot getting Switch port - Nintendo Everything
-							</h2>
-							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65">
-								New rumors surface about Nintendo Switch 2 reveal and release
-								timing plus a Kirby: Planet Robobot Nintendo Switch port.
-							</h5>
-							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65">
-								2024-12-06T16:09:39Z
-							</h5>
-						</div>
-					</div>
-				</li>
-			</ul>
+			<!-- loading frame  -->
+			<div class="animate-fadeInUp mt-[25px] w-full h-fit flex justify-center">
+				<h2
+					id="loadingError"
+					class="text-[42px] text-white text-opacity-70 hidden"
+				>
+					Error in showing result
+				</h2>
+				<i
+					id="loading"
+					class="animate-spin text-[60px] fa-solid fa-spinner text-white text-opacity-70"
+				></i>
+			</div>
 
+			<!-- sixth frame  -->
+			<ul id="newsList" class="flex flex-col gap-[25px] w-full h-fit"></ul>
+
+			<!-- page navigation frame  -->
+			<div class="flex flex-row justify-center w-full h-fit gap-[15px]">
+				<i
+					id="toFirstPage"
+					class="fa-solid fa-angles-left circleButton w-fit h-auto aspect-square text-white hover:bg-white hover:text-blue-500 transition-colors duration-500 ease-in-out sm:text-[20px] text-[14px] hover:cursor-pointer"
+				></i>
+				<i
+					id="toPreviousPage"
+					class="fa-solid fa-chevron-left circleButton text-center w-[54px] h-[54px] text-white hover:bg-white hover:text-blue-500 transition-colors duration-500 ease-in-out sm:text-[20px] text-[14px] hover:cursor-pointer"
+				></i>
+				<h2 id="pageIndex" class="text-white text-[36px] mx-[15px] font-light">
+					1
+				</h2>
+				<i
+					id="toNextPage"
+					class="fa-solid fa-chevron-right circleButton text-center w-[54px] h-[54px] text-white hover:bg-white hover:text-blue-500 transition-colors duration-500 ease-in-out sm:text-[20px] text-[14px] hover:cursor-pointer"
+				></i
+				><i
+					id="toLastPage"
+					class="fa-solid fa-angles-right circleButton w-fit h-fit text-white hover:bg-white hover:text-blue-500 transition-colors duration-500 ease-in-out sm:text-[20px] text-[14px] hover:cursor-pointer"
+				></i>
+			</div>
 			<!-- last frame  -->
 			<div
-				class="animate-fadeInUp flex flex-col sm:flex-row containerPrimary w-full rounded-md h-fit items-center gap-[15px] justify-between p-[15px] mb-[20px]"
+				class="animate-fadeInUp flex flex-col sm:flex-row containerPrimary w-full rounded-md h-fit items-center gap-[15px] justify-between p-[15px] mt-auto"
 			>
 				<h3 class="text-[16px] sm:text-[22px] text-white">© William 2024</h3>
 				<div class="flex flex-row gap-[15px] text-[24px] sm:text-[32px]">

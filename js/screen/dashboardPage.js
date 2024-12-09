@@ -1,4 +1,5 @@
-const user = initLoginCredential();
+import { News } from "../model/news.js";
+import { showWarningToast, scrollToTop } from "../utility.js";
 
 const headerName = document.getElementById("headerName");
 const logOut = document.getElementById("logOut");
@@ -13,6 +14,63 @@ const linkedIn = document.getElementById("linkedIn");
 const gitHub = document.getElementById("gitHub");
 const instagram = document.getElementById("instagram");
 const resultCount = document.getElementById("resultCount");
+
+const loadingSpinner = document.getElementById("loading");
+const loadingErrorText = document.getElementById("loadingError");
+const newsUL = document.getElementById("newsList");
+
+const btnFirstPage = document.getElementById("toFirstPage");
+const btnPrevPage = document.getElementById("toPreviousPage");
+const lblPageIndex = document.getElementById("pageIndex");
+const btnNextPage = document.getElementById("toNextPage");
+const btnLastPage = document.getElementById("toLastPage");
+
+var news = [];
+var currentPage = 1;
+var totalPage;
+
+btnFirstPage.addEventListener("click", function () {
+	if (currentPage != 1) {
+		scrollToTop();
+		currentPage = 1;
+		setListOfNews(currentPage);
+	} else {
+		showWarningToast("Already in the first Page", 1500, () => {});
+	}
+});
+
+btnLastPage.addEventListener("click", function () {
+	if (currentPage != totalPage) {
+		scrollToTop();
+		currentPage = totalPage;
+		setListOfNews(currentPage);
+	} else {
+		showWarningToast("Already in the last Page", 1500, () => {});
+	}
+});
+
+btnNextPage.addEventListener("click", function () {
+	if (currentPage + 1 <= totalPage) {
+		scrollToTop();
+		currentPage += 1;
+		setListOfNews(currentPage);
+	} else {
+		showWarningToast("Already in the last Page", 1500, () => {});
+	}
+});
+
+btnPrevPage.addEventListener("click", function () {
+	if (currentPage - 1 >= 1) {
+		scrollToTop();
+		currentPage -= 1;
+		setListOfNews(currentPage);
+	} else {
+		showWarningToast("Already in the first Page", 1500, () => {});
+	}
+});
+
+const user = initLoginCredential();
+fetchNewsAPI();
 
 window.addEventListener("load", function () {
 	checkIsUpdateReadCount();
@@ -31,6 +89,7 @@ instagram.addEventListener("click", function () {
 });
 
 logOut.addEventListener("click", function () {
+	sessionStorage.clear();
 	history.back();
 });
 
@@ -51,13 +110,20 @@ TFSearchQuery.addEventListener("keydown", (event) => {
 cancelSearch.addEventListener("click", function () {
 	TFSearchQuery.value = "";
 	this.classList.add("hidden");
+	currentPage = 1;
+	scrollToTop();
+	fetchNewsAPI();
 });
 
 BtnSearch.addEventListener("click", function () {
 	if (TFSearchQuery.value === "") {
-		// Do API call for todays headline
+		currentPage = 1;
+		scrollToTop();
+		fetchNewsAPI();
 	} else {
-		// DO API call for the search query
+		currentPage = 1;
+		scrollToTop();
+		fetchNewsAPI(false);
 	}
 });
 
@@ -84,11 +150,154 @@ function outLookText(readCount) {
 }
 
 function checkIsUpdateReadCount() {
-	console.log("test");
 	const isRead = sessionStorage.getItem("isRead");
 
 	if (isRead != null) {
 		// Update GridReadCount and Possibly the GridOutLook
 		console.log("Update");
+	}
+}
+
+function fetchNewsAPI(isHeadline = true) {
+	news.length = 0;
+
+	const API = isHeadline
+		? "https://newsapi.org/v2/top-headlines?apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&language=en"
+		: `https://newsapi.org/v2/everything?q=${TFSearchQuery.value}&apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&page=1`;
+
+	fetch(API)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.json();
+		})
+		.then((data) => {
+			if (data.status != "ok") {
+				loadingSpinner.add("hidden");
+				loadingErrorText.remove("hidden");
+			} else {
+				data.articles.forEach((item) => {
+					const srcID = item.source.id;
+					const srcName = item.source.name;
+					const author = item.author;
+					const title = item.title;
+					const desc = item.description;
+					const url = item.url;
+					const urlImg = item.urlToImage;
+					const datePublished = item.publishedAt;
+					const content = item.content;
+
+					const newNews = new News(
+						srcID,
+						srcName,
+						author,
+						title,
+						desc,
+						url,
+						urlImg,
+						datePublished,
+						content
+					);
+					news.push(newNews);
+				});
+
+				setListOfNews(currentPage);
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			loadingSpinner.classList.add("hidden");
+			loadingErrorText.classList.remove("hidden");
+		});
+}
+
+function setListOfNews(pageIndex) {
+	var newsLength = news.length;
+	var start = (pageIndex - 1) * 10;
+	totalPage = Math.ceil(newsLength / 10);
+	var end;
+	if (newsLength != 0 && (totalPage > pageIndex || newsLength % 10 === 0)) {
+		end = start + 10;
+	} else {
+		end = start + (newsLength % 10);
+	}
+
+	newsUL.innerHTML = "";
+	newsUL.innerText = "";
+	newsUL.classList.add("hidden");
+	for (let i = start; i < end; i++) {
+		newsUL.innerHTML += createInstanceOfNews(news[i]);
+	}
+
+	newsUL.querySelectorAll("li").forEach((item, index) => {
+		item.addEventListener("click", function () {
+			var idx = (currentPage - 1) * 10 + index;
+			sessionStorage.setItem("selectedNews", JSON.stringify(news[idx]));
+			window.location.href = "../html/detailPage.html";
+		});
+	});
+
+	setBtnActive(btnFirstPage, pageIndex === 1 ? false : true);
+	setBtnActive(btnPrevPage, pageIndex === 1 ? false : true);
+	setBtnActive(btnNextPage, pageIndex == totalPage ? false : true);
+	setBtnActive(btnLastPage, pageIndex == totalPage ? false : true);
+	lblPageIndex.innerText = `${news.length == 0 ? 1 : currentPage}`;
+	resultCount.innerText = `Total of ${
+		news.length == 0 ? 0 : news.length
+	} result(s)`;
+
+	if (news.length == 0) {
+		loadingErrorText.innerText = "No news related";
+		loadingErrorText.classList.remove("hidden");
+	} else {
+		loadingErrorText.innerText = "Error in showing result";
+		loadingErrorText.classList.add("hidden");
+	}
+	resultCount.classList.remove("hidden");
+	loadingSpinner.classList.add("hidden");
+	newsUL.classList.remove("hidden");
+}
+
+function createInstanceOfNews(news) {
+	return `<li class="animate-fadeInUp2 w-full h-fit containerPrimary">
+					<div
+						class="flex flex-col sm:flex-row gap-[35px] px-[32px] py-[26px] w-full h-full"
+					>
+						<img
+							src="${news.urlImg}"
+							class="w-full sm:w-[50%] sm:max-w-[50%] aspect-video object-cover rounded-md ${
+								news.urlImg == null ? "bg-white" : ""
+							}"
+							alt="No Image Provided"
+						/>
+						<div
+							class="flex flex-col gap-[16px] sm:justify-start items-start sm:max-w-[50%]"
+						>
+							<h2 class="text-white font-medium text-[16px] sm:text-[20px]">
+								${news.title}
+							</h2>
+							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65">
+								${news.desc == null ? "No Description Provided" : news.desc}
+							</h5>
+							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65">
+								${news.datePublished}
+							</h5>
+						</div>
+					</div>
+				</li>`;
+}
+
+function setBtnActive(btn, isActive) {
+	if (isActive) {
+		btn.classList.add("hover:bg-white");
+		btn.classList.add("hover:text-blue-500");
+		btn.classList.remove("text-opacity-20");
+		btn.classList.remove("border-opacity-20");
+	} else {
+		btn.classList.remove("hover:bg-white");
+		btn.classList.remove("hover:text-blue-500");
+		btn.classList.add("text-opacity-20");
+		btn.classList.add("border-opacity-20");
 	}
 }

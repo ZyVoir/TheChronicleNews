@@ -53,6 +53,17 @@ function showErrorToast(content, duration, onClick) {
 	);
 }
 
+function showWarningToast(content, duration, onClick) {
+	showToast(
+		content,
+		"fa-solid fa-triangle-exclamation",
+		duration,
+		"fdd835",
+		"f57f17",
+		onClick
+	);
+}
+
 function containsSpecialChar(str) {
 	const regex = /[!@#$%^&*(),.?":{}|<>]/;
 	return regex.test(str);
@@ -63,9 +74,18 @@ function containsNumber(str) {
 	return regex.test(str);
 }
 
+function scrollToTop() {
+	window.scrollTo({
+		top: 0,
+		behavior: "instant",
+	});
+}
+
 export {
 	showSuccessToast,
 	showErrorToast,
+	showWarningToast,
 	containsSpecialChar,
 	containsNumber,
+	scrollToTop,
 };
