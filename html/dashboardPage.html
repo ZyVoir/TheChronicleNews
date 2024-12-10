@@ -32,9 +32,9 @@
 
 		<!-- ui -->
 		<div
-			class="flex flex-col w-full flex-grow h-[93vh] gap-[25px] mx-[15px] my-[10px] md:mx-[77px] md:my-[46px] mb-[20px]"
+			class="flex flex-col w-full flex-grow h-auto min-h-[93vh] gap-[25px] mx-[15px] my-[10px] md:mx-[77px] md:my-[46px] mb-[20px]"
 		>
-			<!-- first frame -->
+			<!-- dashboard header + logout button -->
 			<div
 				class="animate-fadeInDown flex flex-row w-full h-fit justify-between items-center"
 			>
@@ -50,7 +50,7 @@
 					class="circleButton w-fit h-fit fa-solid fa-arrow-right-to-bracket text-white hover:bg-white hover:text-red-600 transition-all duration-500 ease-in-out sm:text-[20px] text-[14px] hover:cursor-pointer"
 				></i>
 			</div>
-			<!-- second -->
+			<!-- Dashboard header + about dev -->
 			<div
 				class="animate-fadeInDown flex flex-row w-full h-fit justify-between items-center"
 			>
@@ -68,7 +68,7 @@
 				</h5>
 			</div>
 
-			<!-- third -->
+			<!-- Grid bento frame -->
 			<div
 				class="grid lg:grid-cols-10 h-fit lg:gap-x-[29px] gap-y-[15px] sm:grid-cols-5 sm:gap-x-[15px]"
 			>
@@ -139,6 +139,54 @@
 				</div>
 			</div>
 
+			<!-- topheadline header  -->
+			<div
+				class="animate-fadeInDown flex flex-row w-full h-fit justify-between items-center"
+			>
+				<h2
+					class="text-[16px] md:text-[22px] lg:text-[32px] text-white font-light"
+				>
+					Top Headlines
+				</h2>
+			</div>
+
+			<!-- loading top headline frame  -->
+			<div class="animate-fadeInUp w-full h-fit flex justify-center">
+				<h2
+					id="loadingHeadlineError"
+					class="text-[42px] text-white text-opacity-70 hidden mt-[25px]"
+				>
+					Error in showing result
+				</h2>
+				<i
+					id="loadingHeadline"
+					class="animate-spin text-[60px] fa-solid fa-spinner text-white text-opacity-70"
+				></i>
+			</div>
+
+			<!-- list of topheadline  -->
+			<ul
+				id="headlineList"
+				class="flex flex-row w-[93vw] h-fit gap-[25px] overflow-x-auto"
+			>
+				<li
+					class="flex flex-col gap-[10px] p-[15px] containerPrimary w-fit h-[210px] sm:h-[240px] md:h-[310px] lg:h-[370px] animate-fadeInDown mb-[25px] justify-start hidden"
+				>
+					<img
+						src="../asset/Logo.png"
+						alt="No Image Provided"
+						class="aspect-video w-[150px] md:w-[200px] lg:w-[300px] h-auto bg-white rounded-md"
+					/>
+					<h2
+						class="line-clamp-5 w-[150px] md:w-[200px] lg:w-[300px] h-fit text-justify text-white text-[11px] sm:text-[14px] md:text-[20px]"
+					>
+						Rumor: Nintendo Switch 2 reveal and release timing, Kirby: Planet
+						Robobot getting Switch port - Nintendo Everything aaaaa aaaaa aaaaaa
+						aaaaa aaaaaaaa aaaa aaaaa aaaaaaaa aaaa aaaaaaa aaaaa aaaaaa aaa a
+					</h2>
+				</li>
+			</ul>
+
 			<!-- fourth frame -->
 			<div class="flex flex-row gap-[35px] w-full h-fit items-center">
 				<div
@@ -167,16 +215,16 @@
 			<!-- fifth frame -->
 			<h3
 				id="resultCount"
-				class="animate-fadeInUp w-full h-fit text-white font-light text-[20px] opacity-65 hidden"
+				class="animate-fadeInUp w-full h-fit text-white font-light opacity-65 hidden text-[14px] md:text-[18px]"
 			>
 				Showing 35 result(s)
 			</h3>
 
 			<!-- loading frame  -->
-			<div class="animate-fadeInUp mt-[25px] w-full h-fit flex justify-center">
+			<div class="animate-fadeInUp w-full h-fit flex justify-center">
 				<h2
 					id="loadingError"
-					class="text-[42px] text-white text-opacity-70 hidden"
+					class="text-[42px] mt-[25px] text-white text-opacity-70 hidden"
 				>
 					Error in showing result
 				</h2>
@@ -188,7 +236,7 @@
 
 			<!-- sixth frame  -->
 			<ul id="newsList" class="flex flex-col gap-[25px] w-full h-fit">
-				<li class="animate-fadeInUp2 w-full h-fit containerPrimary">
+				<li class="animate-fadeInUp2 w-full h-fit containerPrimary hidden">
 					<div
 						class="flex flex-col sm:flex-row gap-[35px] px-[32px] py-[26px] w-full h-full"
 					>

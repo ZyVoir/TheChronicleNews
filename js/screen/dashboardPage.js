@@ -1,5 +1,5 @@
 import { News } from "../model/news.js";
-import { showWarningToast, scrollToTop } from "../utility.js";
+import { showWarningToast, scrollToTop, showErrorToast } from "../utility.js";
 
 const headerName = document.getElementById("headerName");
 const logOut = document.getElementById("logOut");
@@ -15,6 +15,12 @@ const gitHub = document.getElementById("gitHub");
 const instagram = document.getElementById("instagram");
 const resultCount = document.getElementById("resultCount");
 
+const loadingHeadlineSpinner = document.getElementById("loadingHeadline");
+const loadingHeadlineErrorText = document.getElementById(
+	"loadingHeadlineError"
+);
+const headlineUL = document.getElementById("headlineList");
+
 const loadingSpinner = document.getElementById("loading");
 const loadingErrorText = document.getElementById("loadingError");
 const newsUL = document.getElementById("newsList");
@@ -25,6 +31,7 @@ const lblPageIndex = document.getElementById("pageIndex");
 const btnNextPage = document.getElementById("toNextPage");
 const btnLastPage = document.getElementById("toLastPage");
 
+var headlineNews = [];
 var news = [];
 var currentPage = 1;
 var totalPage;
@@ -70,6 +77,7 @@ btnPrevPage.addEventListener("click", function () {
 });
 
 var user = initLoginCredential();
+fetchHeadlineAPI();
 fetchNewsAPI();
 
 window.addEventListener("load", function () {
@@ -111,19 +119,15 @@ cancelSearch.addEventListener("click", function () {
 	TFSearchQuery.value = "";
 	this.classList.add("hidden");
 	currentPage = 1;
-	scrollToTop();
-	fetchNewsAPI();
 });
 
 BtnSearch.addEventListener("click", function () {
-	if (TFSearchQuery.value === "") {
+	if (TFSearchQuery.value !== "") {
 		currentPage = 1;
 		scrollToTop();
 		fetchNewsAPI();
 	} else {
-		currentPage = 1;
-		scrollToTop();
-		fetchNewsAPI(false);
+		showErrorToast("You cant search for nothing!", 1500, () => {});
 	}
 });
 
@@ -170,11 +174,90 @@ function checkIsUpdateReadCount() {
 	}
 }
 
-function fetchNewsAPI(isHeadline = true) {
+function fetchHeadlineAPI() {
+	headlineNews.length = 0;
+	headlineUL.innerHTML = "";
+	headlineUL.innerText = "";
+	headlineUL.classList.add("hidden");
+	const API =
+		"https://newsapi.org/v2/top-headlines?apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&language=en";
+	fetch(API)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.json();
+		})
+		.then((data) => {
+			if (data.status != "ok") {
+				loadingHeadlineSpinner.add("hidden");
+				loadingHeadlineErrorText.remove("hidden");
+			} else {
+				data.articles.forEach((item) => {
+					const srcID = item.source.id;
+					const srcName = item.source.name;
+					const author = item.author;
+					const title = item.title;
+					const desc = item.description;
+					const url = item.url;
+					const urlImg = item.urlToImage;
+					const datePublished = item.publishedAt;
+					const content = item.content;
+
+					const newNews = new News(
+						srcID,
+						srcName,
+						author,
+						title,
+						desc,
+						url,
+						urlImg,
+						datePublished,
+						content
+					);
+					headlineNews.push(newNews);
+
+					headlineUL.innerHTML += createInstanceOfHeadline(newNews);
+				});
+
+				headlineUL.querySelectorAll("li").forEach((item, index) => {
+					item.addEventListener("click", function () {
+						sessionStorage.setItem(
+							"selectedNews",
+							JSON.stringify(headlineNews[index])
+						);
+						window.location.href = "../html/detailPage.html";
+					});
+				});
+
+				loadingHeadlineSpinner.classList.add("hidden");
+				headlineUL.classList.remove("hidden");
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			loadingHeadlineSpinner.classList.add("hidden");
+			loadingHeadlineErrorText.classList.remove("hidden");
+		});
+}
+
+function fetchNewsAPI() {
+	const newsExampleQuery = [
+		"Bitcoin",
+		"Barack Obama",
+		"Trump",
+		"Indonesia",
+		"Prabowo",
+		"Apple Developer Academy",
+		"Economy",
+	];
+	const randomSearch = Math.floor(Math.random() * newsExampleQuery.length);
 	news.length = 0;
-	const API = isHeadline
-		? "https://newsapi.org/v2/top-headlines?apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&language=en"
-		: `https://newsapi.org/v2/everything?q=${TFSearchQuery.value}&apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&page=1`;
+	if (TFSearchQuery.value == "") {
+		TFSearchQuery.value = newsExampleQuery[randomSearch];
+	}
+
+	const API = `https://newsapi.org/v2/everything?q=${TFSearchQuery.value}&apiKey=6fdb6bd0c70c43998d61f046fd3dab5a&page=1`;
 
 	fetch(API)
 		.then((response) => {
@@ -270,6 +353,21 @@ function setListOfNews(pageIndex) {
 	newsUL.classList.remove("hidden");
 }
 
+function createInstanceOfHeadline(news) {
+	return `<li
+					class="flex flex-col gap-[10px] p-[15px] containerPrimary w-fit h-[210px] sm:h-[240px] md:h-[310px] lg:h-[370px] animate-fadeInDown mb-[25px] justify-start"
+				>
+					<img src="${
+						news.urlImg == null ? "" : news.urlImg
+					}" alt="No Image Provided" class="aspect-video w-[150px] md:w-[200px] lg:w-[300px] h-auto ${
+		news.urlImg == null ? "bg-white" : ""
+	} rounded-md"></img>
+					<h2 class="line-clamp-5 w-[150px] md:w-[200px] lg:w-[300px] h-fit text-justify text-white text-[11px] sm:text-[14px] md:text-[20px]">${
+						news.title
+					}</h2>
+				</li>`;
+}
+
 function createInstanceOfNews(news) {
 	return `<li class="animate-fadeInUp2 w-full h-fit containerPrimary">
 					<div
@@ -292,7 +390,7 @@ function createInstanceOfNews(news) {
 								${news.desc == null ? "No Description Provided" : news.desc}
 							</h5>
 							<h5 class="text-white text-[11px] sm:text-[15px] opacity-65 text-justify">
-								${news.datePublished}
+								${news.datePublished.replace(/[ZT]/g, " ")}
 							</h5>
 						</div>
 					</div>

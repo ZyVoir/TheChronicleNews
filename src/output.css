@@ -607,6 +607,28 @@ body{
   --tw-border-opacity: 0.5;
 }
 
+#headlineList::-webkit-scrollbar {
+  height: 8px;
+}
+
+#headlineList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100vw;
+}
+
+#headlineList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border: 6px solid grey;
+  border-radius: 100vw;
+}
+
+.ellipsisText {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @media (max-width: 1000px) {
   .circle {
     width: 75%;
@@ -720,6 +742,10 @@ body{
   margin-bottom: 20px;
 }
 
+.mb-\[25px\]{
+  margin-bottom: 25px;
+}
+
 .ml-\[5px\]{
   margin-left: 5px;
 }
@@ -742,6 +768,17 @@ body{
 
 .mt-auto{
   margin-top: auto;
+}
+
+.mb-auto{
+  margin-bottom: auto;
+}
+
+.line-clamp-5{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 }
 
 .flex{
@@ -784,10 +821,6 @@ body{
   height: 60px;
 }
 
-.h-\[93vh\]{
-  height: 93vh;
-}
-
 .h-auto{
   height: auto;
 }
@@ -805,8 +838,60 @@ body{
   height: 100vh;
 }
 
+.h-\[361px\]{
+  height: 361px;
+}
+
+.h-\[371px\]{
+  height: 371px;
+}
+
+.h-\[400px\]{
+  height: 400px;
+}
+
+.h-\[500px\]{
+  height: 500px;
+}
+
+.h-\[300px\]{
+  height: 300px;
+}
+
+.h-\[390px\]{
+  height: 390px;
+}
+
+.h-\[370px\]{
+  height: 370px;
+}
+
+.h-\[180px\]{
+  height: 180px;
+}
+
+.h-\[200px\]{
+  height: 200px;
+}
+
+.h-\[210px\]{
+  height: 210px;
+}
+
 .min-h-\[93vh\]{
   min-height: 93vh;
+}
+
+.min-h-\[380px\]{
+  min-height: 380px;
+}
+
+.min-h-\[400px\]{
+  min-height: 400px;
+}
+
+.min-h-\[500px\]{
+  min-height: 500px;
 }
 
 .w-\[100px\]{
@@ -815,6 +900,10 @@ body{
 
 .w-\[110\%\]{
   width: 110%;
+}
+
+.w-\[150px\]{
+  width: 150px;
 }
 
 .w-\[17px\]{
@@ -831,6 +920,10 @@ body{
 
 .w-\[60px\]{
   width: 60px;
+}
+
+.w-\[93vw\]{
+  width: 93vw;
 }
 
 .w-fit{
@@ -1002,6 +1095,10 @@ body{
   align-self: center;
 }
 
+.overflow-x-auto{
+  overflow-x: auto;
+}
+
 .rounded-full{
   border-radius: 9999px;
 }
@@ -1140,6 +1237,11 @@ body{
   padding-right: 17px;
 }
 
+.px-\[32px\]{
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
 .px-\[35px\]{
   padding-left: 35px;
   padding-right: 35px;
@@ -1148,6 +1250,11 @@ body{
 .py-\[25px\]{
   padding-top: 25px;
   padding-bottom: 25px;
+}
+
+.py-\[26px\]{
+  padding-top: 26px;
+  padding-bottom: 26px;
 }
 
 .py-\[5px\]{
@@ -1160,14 +1267,8 @@ body{
   padding-bottom: 8px;
 }
 
-.px-\[32px\]{
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
-.py-\[26px\]{
-  padding-top: 26px;
-  padding-bottom: 26px;
+.pe-0{
+  padding-inline-end: 0px;
 }
 
 .text-left{
@@ -1424,6 +1525,18 @@ body{
     height: 54px;
   }
 
+  .sm\:h-\[370px\]{
+    height: 370px;
+  }
+
+  .sm\:h-\[250px\]{
+    height: 250px;
+  }
+
+  .sm\:h-\[240px\]{
+    height: 240px;
+  }
+
   .sm\:w-\[108px\]{
     width: 108px;
   }
@@ -1432,20 +1545,20 @@ body{
     width: 163px;
   }
 
-  .sm\:w-\[54px\]{
-    width: 54px;
-  }
-
   .sm\:w-\[50\%\]{
     width: 50%;
   }
 
-  .sm\:max-w-none{
-    max-width: none;
+  .sm\:w-\[54px\]{
+    width: 54px;
   }
 
   .sm\:max-w-\[50\%\]{
     max-width: 50%;
+  }
+
+  .sm\:max-w-none{
+    max-width: none;
   }
 
   .sm\:grid-cols-5{
@@ -1482,6 +1595,14 @@ body{
     font-size: 11px;
   }
 
+  .sm\:text-\[14px\]{
+    font-size: 14px;
+  }
+
+  .sm\:text-\[15px\]{
+    font-size: 15px;
+  }
+
   .sm\:text-\[16px\]{
     font-size: 16px;
   }
@@ -1508,10 +1629,6 @@ body{
 
   .sm\:text-\[52px\]{
     font-size: 52px;
-  }
-
-  .sm\:text-\[15px\]{
-    font-size: 15px;
   }
 }
 
@@ -1545,6 +1662,26 @@ body{
     height: 4px;
   }
 
+  .md\:h-\[370px\]{
+    height: 370px;
+  }
+
+  .md\:h-\[340px\]{
+    height: 340px;
+  }
+
+  .md\:h-\[330px\]{
+    height: 330px;
+  }
+
+  .md\:h-\[310px\]{
+    height: 310px;
+  }
+
+  .md\:w-\[200px\]{
+    width: 200px;
+  }
+
   .md\:w-\[450px\]{
     width: 450px;
   }
@@ -1569,8 +1706,16 @@ body{
     font-size: 16px;
   }
 
+  .md\:text-\[18px\]{
+    font-size: 18px;
+  }
+
   .md\:text-\[20px\]{
     font-size: 20px;
+  }
+
+  .md\:text-\[22px\]{
+    font-size: 22px;
   }
 
   .md\:text-\[24px\]{
@@ -1609,6 +1754,14 @@ body{
     margin-bottom: 35px;
   }
 
+  .lg\:h-\[370px\]{
+    height: 370px;
+  }
+
+  .lg\:w-\[300px\]{
+    width: 300px;
+  }
+
   .lg\:grid-cols-10{
     grid-template-columns: repeat(10, minmax(0, 1fr));
   }
@@ -1616,6 +1769,10 @@ body{
   .lg\:gap-x-\[29px\]{
     -moz-column-gap: 29px;
          column-gap: 29px;
+  }
+
+  .lg\:text-\[32px\]{
+    font-size: 32px;
   }
 
   .lg\:text-\[36px\]{

@@ -49,6 +49,27 @@
 		@apply border-opacity-50;
 	}
 
+	#headlineList::-webkit-scrollbar {
+		height: 8px;
+	}
+
+	#headlineList::-webkit-scrollbar-track {
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 100vw;
+	}
+	#headlineList::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.2);
+		border: 6px solid grey;
+		border-radius: 100vw;
+	}
+
+	.ellipsisText {
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
 	@media (max-width: 1000px) {
 		.circle {
 			width: 75%;

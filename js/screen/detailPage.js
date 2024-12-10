@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	newsDate.innerText =
 		selectedNews.datePublished == null
 			? "No Date Specified"
-			: selectedNews.datePublished;
+			: selectedNews.datePublished.replace(/[ZT]/g, " ");
 	newsContent.innerText =
 		selectedNews.content == null ? "No Content Provided" : selectedNews.content;
 
