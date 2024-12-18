@@ -1,6 +1,10 @@
 import { News } from "../model/news.js";
 import { showWarningToast, scrollToTop, showErrorToast } from "../utility.js";
 
+if (!sessionStorage.getItem("loggedInUser")) {
+	window.location.href = "../html/index.html";
+}
+
 const headerName = document.getElementById("headerName");
 const logOut = document.getElementById("logOut");
 const gridName = document.getElementById("gridName");

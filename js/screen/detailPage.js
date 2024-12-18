@@ -1,10 +1,14 @@
+if (!sessionStorage.getItem("loggedInUser")) {
+	window.location.href = "../html/index.html";
+}
+
 const btnExit = document.getElementById("exit");
 const selectedNews = JSON.parse(sessionStorage.getItem("selectedNews"));
 
 const newsImg = document.getElementById("newsImg");
 const newsTitle = document.getElementById("newsTitle");
 const newsDesc = document.getElementById("newsDesc");
-const newsURL = document.getElementById("newsURL");
+const newsURLButton = document.getElementById("newsURLButton");
 const newsSrc = document.getElementById("newsSrc");
 const newsAuthor = document.getElementById("newsAuthor");
 const newsDate = document.getElementById("newsDate");
@@ -16,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		selectedNews.title == null ? "No Title Provided" : selectedNews.title;
 	newsDesc.innerText =
 		selectedNews.desc == null ? "No Description Provided" : selectedNews.desc;
-	newsURL.href = selectedNews.url == null ? "#" : selectedNews.url;
 	newsSrc.innerText = `Source - [${
 		selectedNews.srcID == null ? "Unknown" : selectedNews.srcID
 	}] : [${selectedNews.srcName == null ? "Unknown" : selectedNews.srcName}]`;
@@ -31,6 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		selectedNews.content == null ? "No Content Provided" : selectedNews.content;
 
 	sessionStorage.setItem("isRead", true);
+
+	newsURLButton.onclick = function () {
+		if (selectedNews.url != null) {
+			window.open(selectedNews.url, "_blank");
+		}
+	};
 });
 
 btnExit.addEventListener("click", function () {

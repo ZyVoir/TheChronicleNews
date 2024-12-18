@@ -25,9 +25,9 @@ function showToast(content, FAIcon, duration, color1, color2, onClick) {
 			background: `linear-gradient(to right, #${color1}, #${color2})`,
 			borderRadius: "10px",
 			padding: "12px",
-			color: "white", // Ensures text is visible on background
+			color: "white",
 		},
-		onClick: onClick, // Callback after click
+		onClick: onClick,
 	}).showToast();
 }
 
